@@ -11,7 +11,7 @@ function findJsonKeyValue(o, key, cb) {
                     cb(o[keyname]);
                     return;
                 }
-                if (o[keyname] != null && typeof (o[keyname] == "object")) {
+                if (o[keyname] != null && typeof (o[keyname]) == "object") {
                     findJsonKeyValue(o[keyname], key, (value) => {
                         if (value) {
                             cb(value);
