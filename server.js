@@ -23,13 +23,16 @@ app.get('/', (req, res) => {
     console.log('Request Captured');
     res.sendFile(path.join(__dirname, '/index.html'));
     var key = "test3";
-    test.getJsonKeyValue(data, "test3", (value) => {
+    test.findJsonKeyValue(data, "test3", (value) => {
         console.log(`found: key with value = ${value}`);
     });
-    test.getJsonKeyValue(null, "test3", (value) => {
+    test.findJsonKeyValue(null, "test3", (value) => {
         console.log(`found: key with value = ${value}`);
     });
-    test.getJsonKeyValue(null, null, (value) => {
+    test.findJsonKeyValue(null, null, (value) => {
+        console.log(`found: key with value = ${value}`);
+    });
+    test.findJsonKeyValue(null, null, (value) => {
         console.log(`found: key with value = ${value}`);
     });
 

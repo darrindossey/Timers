@@ -1,28 +1,38 @@
-
-function getJsonKeyValue(o, key, cb) {
+// Search json string for key and return value
+// Parameters:
+//    o = json object to be searched
+//    key = string key name to be found
+//    cb = callback function to handle search
+function findJsonKeyValue(o, key, cb) {
     try {
-        for (var kn in o) {
-            console.log(`for loop value ${kn}`);
-            if (kn == key) {
-                console.log(`found the key named ${key}`);
-                cb(o[kn]);
-                return;
-            } else {
-                if (typeof (o[kn]) == "object") {
-                    getJsonKeyValue(o[kn], key, (value) => {
-                        cb(value);
-                    })
+        if (typeof (o) == "object") {
+            for (var keyname in o) {
+                if (keyname == key) {
+                    cb(o[keyname]);
+                    return;
+                }
+                if (o[keyname] != null && typeof (o[keyname] == "object")) {
+                    findJsonKeyValue(o[keyname], key, (value) => {
+                        if (value) {
+                            cb(value);
+                            return;
+                        }
+                    });
                 }
             }
+            // Do Nothing
+        }
+        else {
+            // Do Nothing
+            cb(null);
         }
     }
     catch (error) {
-        // Do nothing
-        console.log(error);
-        return;
+        // On Error return null
+        cb(null);
     }
 }
 
 module.exports = {
-    getJsonKeyValue
-}
+    findJsonKeyValue
+};
