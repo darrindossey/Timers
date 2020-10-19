@@ -5,40 +5,38 @@
 //    cb = callback function to handle search
 function findJsonKeyValue(o, key, cb) {
     try {
-        for (var keyname in o) {
-            let returnvalue =
-                (keyname == key) ? o[keyname] :
-                    (typeof (o[keyname]) == "object") ?
-                        findJsonKeyValue(o[keyname], key, (value) => {
-                            cb(value);
-                            return;
-                        }) : null;
-            (returnvalue) ? cb(returnvalue) : null;
-        };
-
-
-        //if (keyname == key) {
-        //    cb(o[keyname]);
-        //    return;
-        //}
-        //if (typeof (o[keyname]) == "object") {
-        //    findJsonKeyValue(o[keyname], key, (value) => {
-        //        if (value) {
-        //            cb(value);
-        //            return;
-        //        }
-        //    });
-        //}
-        //}
-        // Do Nothing
-        //} else {
-        // Do Nothing
-        //    cb(null);
-        //}
+        if (typeof (o) == "object") {
+            processObject(o, key, (value) => {
+                cb(value);
+            })
+        }
+        else {
+            // Do Nothing
+            cb(null);
+        }
     }
     catch (error) {
         // On Error return null
+        console.log(error);
         cb(null);
+    }
+}
+
+function processObject(o, key, cb) {
+    for (var keyname in o) {
+        if (keyname == key) {
+            cb(o[keyname]);
+            return;
+        }
+        if (typeof (o[keyname]) == "object") {
+            processObject(o[keyname], key, (value) => {
+                if (value) {
+                    cb(value);
+                    return;
+                }
+                return;
+            });
+        }
     }
 }
 
