@@ -28,15 +28,14 @@ function processObject(o, key, cb) {
             cb(o[keyname]);
             return;
         }
-        if (typeof (o[keyname]) == "object") {
+        (typeof (o[keyname]) == "object") ?
             processObject(o[keyname], key, (value) => {
                 if (value) {
                     cb(value);
                     return;
                 }
-                return;
-            });
-        }
+            })
+            : null
     }
 }
 
